@@ -1,71 +1,11 @@
-
-// Helpers for testing offline functionality
-const goOffline = () => {
-  cy.log('**go offline**')
-  .then(() => {
-    return Cypress.automation('remote:debugger:protocol',
-      {
-        command: 'Network.enable',
-      })
-  })
-  .then(() => {
-    return Cypress.automation('remote:debugger:protocol',
-      {
-        command: 'Network.emulateNetworkConditions',
-        params: {
-          offline: true,
-          latency: -1,
-          downloadThroughput: -1,
-          uploadThroughput: -1,
-        },
-      })
-  })
-}
-const goOnline = () => {
-  // disable offline mode, otherwise we will break our tests :)
-  cy.log('**go online**')
-  .then(() => {
-    // https://chromedevtools.github.io/devtools-protocol/1-3/Network/#method-emulateNetworkConditions
-    return Cypress.automation('remote:debugger:protocol',
-      {
-        command: 'Network.emulateNetworkConditions',
-        params: {
-          offline: false,
-          latency: -1,
-          downloadThroughput: -1,
-          uploadThroughput: -1,
-        },
-      })
-  })
-  .then(() => {
-    return Cypress.automation('remote:debugger:protocol',
-      {
-        command: 'Network.disable',
-      })
-  })
-}
-
-// Make sure we always start and end each test online so we don't have to do any cleanup between tests
-beforeEach(goOnline);
-afterEach(goOnline);
-
 // These tests require the TMDB API to be mocked, make sure 
 // the environment variable NEXT_PUBLIC_API_MOCKING=enabled is set
-describe('Network offline test', () => {
-  it('Should deliver cached data when offline', () => {
-    cy.visit('http://localhost:3000');
-    goOffline();
-    cy.intercept('/api/trending').as('trending');
-    cy.visit('http://localhost:3000');
-    cy.findByRole('list').find('li').should('have.length', 20);
-    //cy.wait('@trending').its('response.statusCode').should('eq', 304);
-  })
-})
-
 describe('Filter test', () => {
   it('Should filter by genre', () => {
     cy.visit('http://localhost:3000');
 
+    cy.intercept('/api/genres').as('genres');
+    cy.wait('@genres')
     // Full list should have 20 items
     cy.findByRole('list').find('li').should('have.length', 20);
 

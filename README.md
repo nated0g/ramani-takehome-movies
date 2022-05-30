@@ -1,23 +1,34 @@
-# Progressive Web App Example
+# Ramani Take Home
 
-This example uses [`next-pwa`](https://github.com/shadowwalker/next-pwa) to create a progressive web app (PWA) powered by [Workbox](https://developers.google.com/web/tools/workbox/).
+### Design
 
-## Deploy your own
+One of the core design requirements for this assignment was to make sure that
+the application would function offline.  To implement this functionality I used
+the library [next-pwa](https://github.com/shadowwalker/next-pwa).  This sets up
+service-workers for caching, including for cross-origin requests.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+I used cypress for integration testing.  For testing purposes, I mock the API
+calls at the network level using [Mock Service Worker](https://mswjs.io/).
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/progressive-web-app&project-name=progressive-web-app&repository-name=progressive-web-app)
 
-## How to use
+### Instructions
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
+First include your The Movie Database API key:
 ```bash
-npx create-next-app --example progressive-web-app progressive-web-app
-# or
-yarn create next-app --example progressive-web-app progressive-web-app
-# or
-pnpm create next-app -- --example progressive-web-app progressive-web-app
+echo "TMDB_API_KEY=<YOUR API KEY>" >> env.local
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Install dependencies and run
+```bash
+yarn install
+yarn build
+yarn start
+``` 
+Visit site at `localhost:3000`.
+
+#### Running tests
+```
+yarn dev
+yarn cypress
+```
+

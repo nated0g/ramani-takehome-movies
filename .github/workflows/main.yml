@@ -12,5 +12,9 @@ jobs:
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env: 
+          NEXT_PUBLIC_API_MOCKING: enabled
         with:
           start: yarn dev 
+          wait-on: 'http://localhost:3000'
+          spec: cypress/integration/app.spec.js
