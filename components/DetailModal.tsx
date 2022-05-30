@@ -41,7 +41,7 @@ export default function DetailModal(props: DetailModalProps) {
         </Transition.Child>
 
         <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+          <div className="flex items-center justify-center min-h-full p-4 text-center sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -52,7 +52,7 @@ export default function DetailModal(props: DetailModalProps) {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:w-[50%] sm:p-6">
-                <div className="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
+                <div className="sm:block absolute z-10 top-4 right-4 sm:top-0 sm:right-0 pt-4 pr-4">
                   <button
                     type="button"
                     className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
